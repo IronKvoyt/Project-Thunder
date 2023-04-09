@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cnyq317eu5f32"]
+
+[ext_resource type="Script" path="res://Player/Player.gd" id="1_kkaq0"]
+[ext_resource type="Texture2D" uid="uid://dm8w7877fddlx" path="res://Textures/KnightShield_strip111.png" id="2_s8ihj"]
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+position = Vector2(-1.54547, -1.27473)
+script = ExtResource("1_kkaq0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1, 0.988056)
+texture = ExtResource("2_s8ihj")
+
+[node name="Camera2D" type="Camera2D" parent="."]
