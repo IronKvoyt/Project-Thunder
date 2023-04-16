@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bhhw3c4xf087d"]
+
+[ext_resource type="Texture2D" uid="uid://bhcdito7micl6" path="res://Textures/CONCRETE_2A.png" id="1_nun6o"]
+[ext_resource type="PackedScene" uid="uid://dukyyh1okoppb" path="res://Enemies/enemy.tscn" id="2_o0sk8"]
+[ext_resource type="PackedScene" uid="uid://cnyq317eu5f32" path="res://Player/player.tscn" id="3_577xk"]
+
+[node name="World" type="Node2D"]
+position = Vector2(143, 121)
+
+[node name="BackGround" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(-145.844, -120.01)
+texture = ExtResource("1_nun6o")
+region_enabled = true
+region_rect = Rect2(-500, 500, 2000, 2000)
+
+[node name="Player" parent="BackGround" instance=ExtResource("3_577xk")]
+
+[node name="enemy_lvl_0" parent="BackGround" instance=ExtResource("2_o0sk8")]
