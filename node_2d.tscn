@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3 uid="uid://cwdjp33n7daw1"]
+
+[ext_resource type="Texture2D" uid="uid://bhcdito7micl6" path="res://Textures/CONCRETE_2A.png" id="1_nun6o"]
+[ext_resource type="PackedScene" uid="uid://jp1xybb1j4u1" path="res://Utility/enemy_spawn.tscn" id="2_s5xci"]
+[ext_resource type="PackedScene" uid="uid://cnyq317eu5f32" path="res://Player/player.tscn" id="3_577xk"]
+[ext_resource type="PackedScene" uid="uid://dukyyh1okoppb" path="res://Enemies/enemy.tscn" id="4_a01kd"]
+[ext_resource type="Script" path="res://Utility/spawn_info.gd" id="5_rbe8h"]
+
+[sub_resource type="Resource" id="Resource_xr0l1"]
+script = ExtResource("5_rbe8h")
+time_start = 0
+time_end = 60
+enemy = ExtResource("4_a01kd")
+enemy_num = 2
+enemy_spawn_delay = 1
+
+[node name="World" type="Node2D"]
+position = Vector2(143, 121)
+
+[node name="BackGround" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(-145.844, -120.01)
+texture = ExtResource("1_nun6o")
+region_enabled = true
+region_rect = Rect2(-500, 500, 2000, 2000)
+
+[node name="Player" parent="." instance=ExtResource("3_577xk")]
+
+[node name="EnemySpawn" parent="." instance=ExtResource("2_s5xci")]
+spawns = Array[ExtResource("5_rbe8h")]([SubResource("Resource_xr0l1")])
