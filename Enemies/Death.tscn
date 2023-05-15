@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkwgim1mpvuib"]
+
+[ext_resource type="Texture2D" uid="uid://bpjc7scepmdre" path="res://Textures/Explosion_1.png" id="1_pquf2"]
+[ext_resource type="AudioStream" uid="uid://1pb8qq5a10sb" path="res://Sounds/Enemy_death.ogg" id="2_s2w7a"]
+
+[node name="Explosion" type="Sprite2D"]
+texture = ExtResource("1_pquf2")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_s2w7a")
+volume_db = -15.0
+pitch_scale = 2.5
