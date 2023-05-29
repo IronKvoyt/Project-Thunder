@@ -1,0 +1,199 @@
+[gd_scene load_steps=14 format=3 uid="uid://cnyq317eu5f32"]
+
+[ext_resource type="Script" path="res://Player/Player.gd" id="1_kkaq0"]
+[ext_resource type="Texture2D" uid="uid://dit5hwa1xl7qw" path="res://Player/Red Hood_Idle.png" id="2_u2fx4"]
+[ext_resource type="PackedScene" uid="uid://tu0f2r815kft" path="res://Utility/hurt_box.tscn" id="3_57la5"]
+[ext_resource type="Texture2D" uid="uid://ibwxf3e6iuom" path="res://Textures/Exp_bar.png" id="4_awh6o"]
+[ext_resource type="Texture2D" uid="uid://la3jjmj11lat" path="res://Textures/Exp_bar_fill.png" id="5_ivs77"]
+[ext_resource type="AudioStream" uid="uid://mhtr7xdx4e8o" path="res://Sounds/Level_Up.mp3" id="6_dalhk"]
+[ext_resource type="Texture2D" uid="uid://du3dk38yte46a" path="res://Textures/GUI/healthbar.png" id="7_koajx"]
+[ext_resource type="Texture2D" uid="uid://cwsqyuuf681yx" path="res://Textures/GUI/health.png" id="8_e16fm"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0doal"]
+radius = 5.97913
+height = 18.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fic1u"]
+size = Vector2(10, 17)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_47y5p"]
+radius = 261.546
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i3jkj"]
+radius = 53.5938
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vd7id"]
+radius = 53.7158
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+position = Vector2(-1.54547, -1.27473)
+script = ExtResource("1_kkaq0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(5.64305, -4.16721)
+scale = Vector2(-0.468827, 0.517665)
+texture = ExtResource("2_u2fx4")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+scale = Vector2(1, 0.993572)
+zoom = Vector2(1.23, 1.23)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.45453, -0.72527)
+scale = Vector2(1.00349, 1)
+shape = SubResource("CapsuleShape2D_0doal")
+
+[node name="Hurt_Box" parent="." instance=ExtResource("3_57la5")]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="Hurt_Box" index="0"]
+position = Vector2(-0.45453, -0.22527)
+shape = SubResource("RectangleShape2D_fic1u")
+
+[node name="Attack" type="Node2D" parent="."]
+
+[node name="SwordTimer" type="Timer" parent="Attack"]
+unique_name_in_owner = true
+wait_time = 1.5
+
+[node name="SwordAttackTimer" type="Timer" parent="Attack/SwordTimer"]
+unique_name_in_owner = true
+wait_time = 0.075
+
+[node name="EnemyDetectioArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 4
+collision_mask = 4
+monitorable = false
+
+[node name="EnemyDetectionShape" type="CollisionShape2D" parent="EnemyDetectioArea"]
+shape = SubResource("CircleShape2D_47y5p")
+
+[node name="GrabArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrabArea"]
+shape = SubResource("CircleShape2D_i3jkj")
+
+[node name="CollectArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectArea"]
+shape = SubResource("CircleShape2D_vd7id")
+
+[node name="GUI" type="CanvasLayer" parent="."]
+
+[node name="GUI" type="Control" parent="GUI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 640.0
+offset_bottom = 480.0
+
+[node name="ExpBar" type="TextureProgressBar" parent="GUI/GUI"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture_under = ExtResource("4_awh6o")
+texture_progress = ExtResource("5_ivs77")
+
+[node name="Label_Level" type="Label" parent="GUI/GUI/ExpBar"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 0
+offset_left = 3.0
+offset_top = -2.0
+offset_right = 61.0
+offset_bottom = 24.0
+scale = Vector2(0.8, 0.8)
+
+[node name="HealthBar" type="TextureProgressBar" parent="GUI/GUI"]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0.392157)
+texture_filter = 1
+layout_mode = 0
+offset_left = 304.0
+offset_top = 260.0
+offset_right = 336.0
+offset_bottom = 268.0
+value = 50.0
+texture_over = ExtResource("7_koajx")
+texture_progress = ExtResource("8_e16fm")
+
+[node name="LevelUp" type="Panel" parent="GUI/GUI"]
+unique_name_in_owner = true
+process_mode = 2
+layout_mode = 0
+offset_left = 800.0
+offset_top = 50.0
+offset_right = 1000.0
+offset_bottom = 300.0
+
+[node name="Label_LevelUp" type="Label" parent="GUI/GUI/LevelUp"]
+texture_filter = 1
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 50.0
+text = "Level Up!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UpgradeOptions" type="VBoxContainer" parent="GUI/GUI/LevelUp"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 10.0
+offset_top = 50.0
+offset_right = 190.0
+offset_bottom = 100.0
+
+[node name="Sound_LevelUp" type="AudioStreamPlayer" parent="GUI/GUI/LevelUp"]
+unique_name_in_owner = true
+stream = ExtResource("6_dalhk")
+volume_db = -7.0
+pitch_scale = 0.91
+
+[node name="Label_Timer" type="Label" parent="GUI/GUI"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 0
+offset_left = 280.0
+offset_top = 20.0
+offset_right = 321.0
+offset_bottom = 46.0
+scale = Vector2(0.7, 0.7)
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CollectedWeapons" type="GridContainer" parent="GUI/GUI"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 8.0
+offset_top = 24.0
+offset_right = 208.0
+offset_bottom = 40.0
+columns = 10
+
+[node name="CollectedUpgrades" type="GridContainer" parent="GUI/GUI"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 8.0
+offset_top = 40.0
+offset_right = 208.0
+offset_bottom = 56.0
+columns = 10
+
+[connection signal="hurt" from="Hurt_Box" to="." method="_on_hurt_box_hurt"]
+[connection signal="timeout" from="Attack/SwordTimer" to="." method="_on_sword_timer_timeout"]
+[connection signal="timeout" from="Attack/SwordTimer/SwordAttackTimer" to="." method="_on_sword_attack_timer_timeout"]
+[connection signal="body_entered" from="EnemyDetectioArea" to="." method="_on_enemy_detectio_area_body_entered"]
+[connection signal="body_exited" from="EnemyDetectioArea" to="." method="_on_enemy_detectio_area_body_exited"]
+[connection signal="area_entered" from="GrabArea" to="." method="_on_grab_area_area_entered"]
+[connection signal="area_entered" from="CollectArea" to="." method="_on_collect_area_area_entered"]
+
+[editable path="Hurt_Box"]
