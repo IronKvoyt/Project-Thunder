@@ -1,0 +1,65 @@
+[gd_scene load_steps=9 format=3 uid="uid://wnarisgwua7l"]
+
+[ext_resource type="Script" path="res://Enemies/enemy.gd" id="1_pxg0q"]
+[ext_resource type="Texture2D" uid="uid://nieambeml5sh" path="res://Textures/reaper.png" id="2_0tudu"]
+[ext_resource type="PackedScene" uid="uid://tu0f2r815kft" path="res://Utility/hurt_box.tscn" id="3_qw6xc"]
+[ext_resource type="PackedScene" uid="uid://bilm4pceveln" path="res://Utility/hit_box.tscn" id="4_spetr"]
+[ext_resource type="AudioStream" uid="uid://c7fpmx6an4tlq" path="res://Sounds/Enemy_Hit.ogg" id="5_w5j3o"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c8nix"]
+radius = 6.58192
+height = 24.7643
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w1egm"]
+size = Vector2(72, 82)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4rxww"]
+size = Vector2(74, 82)
+
+[node name="enemy_reaper" type="CharacterBody2D"]
+collision_layer = 5
+collision_mask = 5
+motion_mode = 1
+script = ExtResource("1_pxg0q")
+movespeed = 150
+hp = 99999
+knockback_recovery = 99999
+experience = 5
+enemy_damage = 25
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(5, -6)
+texture = ExtResource("2_0tudu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 7)
+scale = Vector2(1.21545, 1.0499)
+shape = SubResource("CapsuleShape2D_c8nix")
+
+[node name="Hurt_Box" parent="." instance=ExtResource("3_qw6xc")]
+collision_layer = 4
+collision_mask = 4
+HurtBoxType = 1
+
+[node name="CollisionShape2D" parent="Hurt_Box" index="0"]
+visible = false
+position = Vector2(-1, 4)
+shape = SubResource("RectangleShape2D_w1egm")
+
+[node name="Hit_Box" parent="." instance=ExtResource("4_spetr")]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="Hit_Box" index="0"]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_4rxww")
+
+[node name="sound_hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_w5j3o")
+volume_db = -25.0
+
+[connection signal="hurt" from="Hurt_Box" to="." method="_on_hurt_box_hurt"]
+
+[editable path="Hurt_Box"]
+[editable path="Hit_Box"]

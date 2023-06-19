@@ -1,0 +1,67 @@
+[gd_scene load_steps=9 format=3 uid="uid://dpjusjr3tr0r2"]
+
+[ext_resource type="Script" path="res://Enemies/enemy.gd" id="1_tvfdf"]
+[ext_resource type="Texture2D" uid="uid://dgkme1d6maf4r" path="res://Textures/demon_lord.png" id="2_48sv2"]
+[ext_resource type="PackedScene" uid="uid://tu0f2r815kft" path="res://Utility/hurt_box.tscn" id="3_lqoql"]
+[ext_resource type="PackedScene" uid="uid://bilm4pceveln" path="res://Utility/hit_box.tscn" id="4_2mxgx"]
+[ext_resource type="AudioStream" uid="uid://c7fpmx6an4tlq" path="res://Sounds/Enemy_Hit.ogg" id="5_cr30x"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c8nix"]
+radius = 14.8093
+height = 47.6236
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w1egm"]
+size = Vector2(118, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4rxww"]
+size = Vector2(136, 130)
+
+[node name="enemy_demonlord" type="CharacterBody2D"]
+collision_layer = 5
+collision_mask = 5
+motion_mode = 1
+script = ExtResource("1_tvfdf")
+movespeed = 40
+hp = 300
+knockback_recovery = 20
+experience = 100
+enemy_damage = 8
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(7, 0)
+texture = ExtResource("2_48sv2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(-8, 9)
+scale = Vector2(1.21545, 1.0499)
+shape = SubResource("CapsuleShape2D_c8nix")
+
+[node name="Hurt_Box" parent="." instance=ExtResource("3_lqoql")]
+collision_layer = 4
+collision_mask = 4
+HurtBoxType = 1
+
+[node name="CollisionShape2D" parent="Hurt_Box" index="0"]
+visible = false
+position = Vector2(2, -5)
+shape = SubResource("RectangleShape2D_w1egm")
+
+[node name="Hit_Box" parent="." instance=ExtResource("4_2mxgx")]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="Hit_Box" index="0"]
+visible = false
+position = Vector2(10, -5)
+shape = SubResource("RectangleShape2D_4rxww")
+
+[node name="sound_hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_cr30x")
+volume_db = -25.0
+
+[connection signal="hurt" from="Hurt_Box" to="." method="_on_hurt_box_hurt"]
+
+[editable path="Hurt_Box"]
+[editable path="Hit_Box"]
